@@ -34,7 +34,7 @@ public class ExtraRecords {
     public void preInit (FMLPreInitializationEvent e) {
         MinecraftForge.EVENT_BUS.register(instance);
         ERConfig.init(e);
-        //make items
+        proxy.registerItems();
         //make item textures
     }
     @Mod.EventHandler
