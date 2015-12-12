@@ -6,10 +6,12 @@ import com.mattdahepic.extrarecords.item.ItemExtraRecord;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommonProxy {
+    public void registerRenders () {}
     public void registerItems () {
         int recordNum = 0;
         for (InternalRecordData record : ERConfig.records) {
-            GameRegistry.registerItem(new ItemExtraRecord(record,recordNum),"record"+recordNum,ExtraRecords.MODID);
+            ExtraRecords.records.add(recordNum, new ItemExtraRecord(record,recordNum));
+            GameRegistry.registerItem(ExtraRecords.records.get(recordNum),"record"+recordNum,ExtraRecords.MODID);
             recordNum++;
         }
     }

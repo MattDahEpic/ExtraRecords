@@ -2,6 +2,7 @@ package com.mattdahepic.extrarecords;
 
 import com.mattdahepic.extrarecords.config.ERConfig;
 import com.mattdahepic.mdecore.update.UpdateChecker;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -11,6 +12,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod(modid = ExtraRecords.MODID,name = ExtraRecords.NAME,version = ExtraRecords.VERSION,dependencies = ExtraRecords.DEPENDENCIES)
 public class ExtraRecords {
@@ -27,6 +31,8 @@ public class ExtraRecords {
 
     public static final Logger logger = LogManager.getLogger(MODID);
 
+    public static List<Item> records = new ArrayList<Item>();
+
     @SidedProxy(clientSide = CLIENT_PROXY,serverSide = COMMON_PROXY)
     public static CommonProxy proxy;
 
@@ -35,12 +41,11 @@ public class ExtraRecords {
         MinecraftForge.EVENT_BUS.register(instance);
         ERConfig.init(e);
         proxy.registerItems();
-        //make item textures
     }
     @Mod.EventHandler
     public void init (FMLInitializationEvent e) {
         UpdateChecker.checkRemote(MODID, UPDATE_URL);
-        //register textures
+        proxy.registerRenders();
     }
     @SubscribeEvent
     public void onJoin (PlayerEvent.PlayerLoggedInEvent e) {

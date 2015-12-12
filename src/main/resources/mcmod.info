@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "extrarecords",
+  "name": "Extra Record",
+  "description": "Add custom records jia JSON configs.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["MattDahEpic"],
+  "credits": "TelicAstraeus of /r/feedthebeast for the idea.",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

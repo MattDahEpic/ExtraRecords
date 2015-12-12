@@ -2,6 +2,7 @@ package com.mattdahepic.extrarecords.item;
 
 import com.mattdahepic.extrarecords.config.data.InternalRecordData;
 import net.minecraft.item.ItemRecord;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -20,5 +21,10 @@ public class ItemExtraRecord extends ItemRecord {
     @SideOnly(Side.CLIENT)
     public String getRecordNameLocal() {
         return data.name;
+    }
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int getColorFromItemStack(ItemStack stack, int renderPass) {
+        return data.color.getRGB();
     }
 }
