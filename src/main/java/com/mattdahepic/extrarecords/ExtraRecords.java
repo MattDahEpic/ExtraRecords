@@ -41,11 +41,11 @@ public class ExtraRecords {
         MinecraftForge.EVENT_BUS.register(instance);
         ERConfig.init(e);
         proxy.registerItems();
+        proxy.registerRenders();
     }
     @Mod.EventHandler
     public void init (FMLInitializationEvent e) {
         UpdateChecker.checkRemote(MODID, UPDATE_URL);
-        proxy.registerRenders();
     }
     @SubscribeEvent
     public void onJoin (PlayerEvent.PlayerLoggedInEvent e) {
