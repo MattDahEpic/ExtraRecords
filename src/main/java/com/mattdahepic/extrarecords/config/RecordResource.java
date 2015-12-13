@@ -16,8 +16,8 @@ import java.util.Set;
 
 public class RecordResource implements IResourcePack {
     private static File mc_dir = Minecraft.getMinecraft().mcDataDir;
-    public InputStream getInputStream(ResourceLocation location) throws IOException {
-        return new FileInputStream(mc_dir);
+    public InputStream getInputStream(ResourceLocation l) throws IOException {
+        return new FileInputStream(mc_dir+File.separator+l.getResourcePath());
     }
     public boolean resourceExists(ResourceLocation location) {
         return isResourceFromThisPack(location) && new File(mc_dir,location.getResourcePath()).exists();

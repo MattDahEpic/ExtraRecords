@@ -4,6 +4,7 @@ import com.mattdahepic.extrarecords.config.data.InternalRecordData;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -25,6 +26,10 @@ public class ItemExtraRecord extends ItemRecord {
     @Override
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int renderPass) {
-        return data.color.getRGB();
+        return renderPass == 1 ? data.color.getRGB() : 16777215;
+    }
+    @Override
+    public String getItemStackDisplayName(ItemStack stack) {
+        return StatCollector.translateToLocal("item.record.name");
     }
 }
