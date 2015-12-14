@@ -12,7 +12,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void registerRenders () {
         for (Item record : ExtraRecords.records) {
-            ModelLoader.setCustomModelResourceLocation(record, ExtraRecords.records.indexOf(record), new ModelResourceLocation("extrarecords:record", "inventory"));
+            ModelLoader.setCustomModelResourceLocation(record, 0, new ModelResourceLocation("extrarecords:record", "inventory"));
             ModelBakery.addVariantName(record, "extrarecords:record");
         }
     }
