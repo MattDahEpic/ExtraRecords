@@ -2,13 +2,13 @@
 {
   "modid": "extrarecords",
   "name": "Extra Record",
-  "description": "Add custom records jia JSON configs.",
+  "description": "Add custom records via JSON configs.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
   "authorList": ["MattDahEpic"],
-  "credits": "TelicAstraeus of /r/feedthebeast for the idea.",
+  "credits": "TelicAstraeus on /r/feedthebeast for the idea.",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

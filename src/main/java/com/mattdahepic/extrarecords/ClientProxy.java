@@ -1,5 +1,6 @@
 package com.mattdahepic.extrarecords;
 
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
@@ -11,8 +12,8 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void registerRenders () {
         for (Item record : ExtraRecords.records) {
-            ModelLoader.setCustomModelResourceLocation(record,ExtraRecords.records.indexOf(record),new ModelResourceLocation("extrarecords:record","inventory"));
-            ModelLoader.addVariantName(record,"extrarecords:record");
+            ModelLoader.setCustomModelResourceLocation(record, ExtraRecords.records.indexOf(record), new ModelResourceLocation("extrarecords:record", "inventory"));
+            ModelBakery.addVariantName(record, "extrarecords:record");
         }
     }
 }
