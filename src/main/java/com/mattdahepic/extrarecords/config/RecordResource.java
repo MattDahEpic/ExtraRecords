@@ -6,12 +6,14 @@ import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.data.IMetadataSection;
 import net.minecraft.client.resources.data.IMetadataSerializer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Set;
 
 public class RecordResource implements IResourcePack {
@@ -37,5 +39,11 @@ public class RecordResource implements IResourcePack {
     //HELPERS
     private boolean isResourceFromThisPack (ResourceLocation l) {
         return l.getResourceDomain().equals(getPackName());
+    }
+
+    public static void addToResorucePackList () {
+        List<IResourcePack> values = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "defaultResourcePacks", "field_110449_ao");
+        values.add(new RecordResource());
+        ReflectionHelper.setPrivateValue(Minecraft.class, Minecraft.getMinecraft(), values, "defaultResourcePacks", "field_110449_ao");
     }
 }

@@ -3,8 +3,6 @@ package com.mattdahepic.extrarecords;
 import com.mattdahepic.extrarecords.config.ERConfig;
 import com.mattdahepic.extrarecords.config.RecordResource;
 import com.mattdahepic.mdecore.update.UpdateChecker;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -13,7 +11,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -47,10 +44,7 @@ public class ExtraRecords {
         proxy.registerItems();
         proxy.registerRenders();
         logger.info("Registered " + records.size() + " records.");
-        //ADD SOUND RESORUCE PACK TO RESOURCE PACK LIST
-        List<IResourcePack> values = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "defaultResourcePacks", "field_110449_ao");
-        values.add(new RecordResource());
-        ReflectionHelper.setPrivateValue(Minecraft.class, Minecraft.getMinecraft(), values, "defaultResourcePacks", "field_110449_ao");
+        RecordResource.addToResorucePackList();
     }
     @Mod.EventHandler
     public void init (FMLInitializationEvent e) {
