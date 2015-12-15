@@ -7,6 +7,7 @@ import java.awt.*;
 public class InternalRecordData {
     public String name;
     public ResourceLocation sound;
+    public int recordNum;
     public Color color;
 
     private InternalRecordData() {}
@@ -14,5 +15,8 @@ public class InternalRecordData {
         this.name = name;
         this.sound = sound;
         this.color = color;
+    }
+    public void setRecordNum (int num) {
+        this.recordNum = num;
     }
 }

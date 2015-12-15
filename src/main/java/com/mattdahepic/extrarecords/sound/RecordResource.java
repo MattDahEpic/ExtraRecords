@@ -16,11 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
-
-import org.apache.commons.io.IOUtils;
 
 public class RecordResource implements IResourcePack {
     public static final String PACK_NAME = "extrarecords_sounds";
@@ -53,37 +48,40 @@ public class RecordResource implements IResourcePack {
         return l.getResourceDomain().equals(getPackName());
     }
     private static InputStream generateSoundsJSON () {
-        
-        ByteArrayOutputStream mediator = new ByteArrayOutputStream();
-	ObjectOutputStream stream = new ObjectOutputStream(mediator);
+        try {
+            ByteArrayOutputStream mediator = new ByteArrayOutputStream();
+            ObjectOutputStream stream = new ObjectOutputStream(mediator);
 
-        JsonObject root = new JsonObject();
-        for (Map.Entry<String,String> entry: sound_map.entrySet()) {
-            JsonObject event = new JsonObject();
-            event.addProperty("category", "record"); // put under the "record" category for sound options
-            JsonArray sounds = new JsonArray(); // array of sounds (will only ever be one)
-            JsonObject sound = new JsonObject(); // sound object (instead of primitive to use 'stream' flag)
-            sound.addProperty("name", entry.getValue()); // path to file
-            sound.addProperty("stream", true); // prevents lag for large files
-            sounds.add(sound);
-            event.add("sounds", sounds);
-            root.add("extrarecords."+entry.getKey(), event); // event name (same as name sent to ItemCustomRecord)
+            JsonObject root = new JsonObject();
+            for (Map.Entry<String, String> entry : sound_map.entrySet()) {
+                JsonObject event = new JsonObject();
+                event.addProperty("category", "record"); // put under the "record" category for sound options
+                JsonArray sounds = new JsonArray(); // array of sounds (will only ever be one)
+                JsonObject sound = new JsonObject(); // sound object (instead of primitive to use 'stream' flag)
+                sound.addProperty("name", entry.getValue()); // path to file
+                sound.addProperty("stream", true); // prevents lag for large files
+                sounds.add(sound);
+                event.add("sounds", sounds);
+                root.add("extrarecords." + entry.getKey(), event); // event name (same as name sent to ItemCustomRecord)
+            }
+
+            stream.writeUTF(root.toString());
+            stream.flush();
+            stream.close();
+
+            return new ByteArrayInputStream(mediator.toByteArray());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        
-	    stream.writeUTF(root.toString());
-	    stream.flush();
-	    IOUtils.closeQuietly(stream);
-        
-        return new ByteArrayInputStream(mediator.toByteArray[]);
     }
 
-    public static void addSoundReferenceMapping (int recordNum, String pathToSound) {
+    public void addSoundReferenceMapping (int recordNum, String pathToSound) {
         sound_map.put("record"+recordNum,pathToSound);
     }
 
-    public static void registerAsResourceLocation () {
+    public void registerAsResourceLocation () {
         List<IResourcePack> values = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "defaultResourcePacks", "field_110449_ao");
-        values.add(new RecordResource());
+        values.add(this);
         ReflectionHelper.setPrivateValue(Minecraft.class, Minecraft.getMinecraft(), values, "defaultResourcePacks", "field_110449_ao");
     }
 }

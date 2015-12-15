@@ -20,9 +20,10 @@ public class ClientProxy extends CommonProxy {
     }
     @Override
     public void registerSounds () {
+        RecordResource r = new RecordResource();
         for (ItemExtraRecord record : ExtraRecords.records) {
-            RecordResource.addSoundReferenceMapping(ExtraRecords.records.indexOf(record), record.data.sound.getResourcePath()); //add reference to IResourcePack
+            r.addSoundReferenceMapping(record.data.recordNum, record.data.sound.getResourcePath()); //add map soundlocation -> recordX
         }
-        RecordResource.registerAsResourceLocation(); //finalise IResourcePack
+        r.registerAsResourceLocation(); //finalise IResourcePack
     }
 }

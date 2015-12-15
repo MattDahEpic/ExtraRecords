@@ -1,6 +1,7 @@
 package com.mattdahepic.extrarecords.item;
 
 import com.mattdahepic.extrarecords.config.data.InternalRecordData;
+import com.mattdahepic.extrarecords.sound.RecordResource;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +17,7 @@ public class ItemExtraRecord extends ItemRecord {
     }
     @Override
     public ResourceLocation getRecordResource(String name) {
-        return data.sound;
+        return new ResourceLocation(RecordResource.PACK_NAME,"record"+data.recordNum);
     }
     @Override
     @SideOnly(Side.CLIENT)

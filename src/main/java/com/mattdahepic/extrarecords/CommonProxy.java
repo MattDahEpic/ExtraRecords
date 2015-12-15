@@ -11,6 +11,7 @@ public class CommonProxy {
     public void registerItems () {
         int recordNum = 0;
         for (InternalRecordData record : ERConfig.records) {
+            record.setRecordNum(recordNum);
             ExtraRecords.records.add(recordNum, new ItemExtraRecord(record,recordNum));
             GameRegistry.registerItem(ExtraRecords.records.get(recordNum),"record"+recordNum);
             recordNum++;
