@@ -54,8 +54,8 @@ public class RecordResource implements IResourcePack {
     }
     private static InputStream generateSoundsJSON () {
         
-        ByteArrayOutputStream mediator = new ByteArrayOutputStream()
-	    ObjectOutputStream stream = new ObjectOutputStream(mediator);
+        ByteArrayOutputStream mediator = new ByteArrayOutputStream();
+	ObjectOutputStream stream = new ObjectOutputStream(mediator);
 
         JsonObject root = new JsonObject();
         for (Map.Entry<String,String> entry: sound_map.entrySet()) {
