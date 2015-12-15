@@ -1,9 +1,8 @@
 package com.mattdahepic.extrarecords;
 
 import com.mattdahepic.extrarecords.config.ERConfig;
-import com.mattdahepic.extrarecords.config.RecordResource;
+import com.mattdahepic.extrarecords.item.ItemExtraRecord;
 import com.mattdahepic.mdecore.update.UpdateChecker;
-import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -32,7 +31,7 @@ public class ExtraRecords {
 
     public static final Logger logger = LogManager.getLogger(MODID);
 
-    public static List<Item> records = new ArrayList<Item>();
+    public static List<ItemExtraRecord> records = new ArrayList<ItemExtraRecord>();
 
     @SidedProxy(clientSide = CLIENT_PROXY,serverSide = COMMON_PROXY)
     public static CommonProxy proxy;
@@ -43,8 +42,8 @@ public class ExtraRecords {
         ERConfig.init(e);
         proxy.registerItems();
         proxy.registerRenders();
+        proxy.registerSounds();
         logger.info("Registered " + records.size() + " records.");
-        RecordResource.addToResorucePackList();
     }
     @Mod.EventHandler
     public void init (FMLInitializationEvent e) {

@@ -31,7 +31,7 @@ public class ERConfig {
             configDir.mkdirs();
             FileWriter out = new FileWriter(new File(configDir,"example_record.json"));
             //BEGIN DEFAULT RECORD
-            ConfigRecordData defaultRecord = new ConfigRecordData("Example Record","/records/example_record.ogg",new RGBWrapper(255,255,255));
+            ConfigRecordData defaultRecord = new ConfigRecordData("Example Record","records/example_record.ogg",new RGBWrapper(255,255,255));
             //END DEFAULT RECORD
             out.write(gson.toJson(defaultRecord));
             out.close();

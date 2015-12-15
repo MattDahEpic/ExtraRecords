@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemExtraRecord extends ItemRecord {
-    private final InternalRecordData data;
+    public final InternalRecordData data;
     public ItemExtraRecord (InternalRecordData data, int recordNum) {
         super("extrarecords_record"+recordNum);
         this.data = data;
