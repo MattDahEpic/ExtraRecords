@@ -16,6 +16,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
+
+import org.apache.commons.io.IOUtils;
 
 public class RecordResource implements IResourcePack {
     public static final String PACK_NAME = "extrarecords_sounds";
@@ -48,6 +53,10 @@ public class RecordResource implements IResourcePack {
         return l.getResourceDomain().equals(getPackName());
     }
     private static InputStream generateSoundsJSON () {
+        
+        ByteArrayOutputStream mediator = new ByteArrayOutputStream()
+	    ObjectOutputStream stream = new ObjectOutputStream(mediator);
+
         JsonObject root = new JsonObject();
         for (Map.Entry<String,String> entry: sound_map.entrySet()) {
             JsonObject event = new JsonObject();
@@ -60,7 +69,12 @@ public class RecordResource implements IResourcePack {
             event.add("sounds", sounds);
             root.add("extrarecords."+entry.getKey(), event); // event name (same as name sent to ItemCustomRecord)
         }
-        return new ObjectInputStream()
+        
+	    stream.writeUTF(root.toString());
+	    stream.flush();
+	    IOUtils.closeQuietly(stream);
+        
+        return new ByteArrayInputStream(mediator.toByteArray[]);
     }
 
     public static void addSoundReferenceMapping (int recordNum, String pathToSound) {
