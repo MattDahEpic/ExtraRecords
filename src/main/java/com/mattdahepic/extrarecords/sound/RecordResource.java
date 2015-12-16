@@ -3,6 +3,7 @@ package com.mattdahepic.extrarecords.sound;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.data.IMetadataSection;
@@ -12,10 +13,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class RecordResource implements IResourcePack {
     public static final String PACK_NAME = "extrarecords_sounds";
@@ -27,7 +25,7 @@ public class RecordResource implements IResourcePack {
         return new FileInputStream(new File(mc_dir,sound_map.get(l.getResourcePath())));
     }
     public boolean resourceExists(ResourceLocation location) {
-        return isResourceFromThisPack(location) && new File(mc_dir,location.getResourcePath()).exists();
+        return isResourceFromThisPack(location) && (location.getResourcePath().equals("sounds.json") || new File(mc_dir,location.getResourcePath()).exists());
     }
     public Set<String> getResourceDomains() {
         return Sets.newHashSet(getPackName());

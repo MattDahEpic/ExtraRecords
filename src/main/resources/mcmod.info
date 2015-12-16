@@ -1,7 +1,7 @@
 [
 {
   "modid": "extrarecords",
-  "name": "Extra Record",
+  "name": "Extra Records",
   "description": "Add custom records via JSON configs.",
   "version": "${version}",
   "mcversion": "${mcversion}",
