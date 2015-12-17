@@ -1,6 +1,7 @@
 package com.mattdahepic.extrarecords.sound;
 
 import com.google.common.collect.Sets;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -21,11 +22,12 @@ public class RecordResource implements IResourcePack {
     private static File mc_dir = Minecraft.getMinecraft().mcDataDir;
 
     public InputStream getInputStream(ResourceLocation l) throws IOException {
+        System.out.println("Getting stream for resource "+l);
         if (l.getResourcePath().equals("sounds.json")) return generateSoundsJSON();
-        return new FileInputStream(new File(mc_dir,sound_map.get(l.getResourcePath())));
+        return new FileInputStream(getRealPathBecauseMojangLiterallyCantEvenCodeOutsideTheirUsageScenario(l));
     }
-    public boolean resourceExists(ResourceLocation location) {
-        return isResourceFromThisPack(location) && (location.getResourcePath().equals("sounds.json") || new File(mc_dir,location.getResourcePath()).exists());
+    public boolean resourceExists(ResourceLocation l) {
+        return isResourceFromThisPack(l) && (l.getResourcePath().equals("sounds.json") || getRealPathBecauseMojangLiterallyCantEvenCodeOutsideTheirUsageScenario(l).exists());
     }
     public Set<String> getResourceDomains() {
         return Sets.newHashSet(getPackName());
@@ -45,32 +47,27 @@ public class RecordResource implements IResourcePack {
     private boolean isResourceFromThisPack (ResourceLocation l) {
         return l.getResourceDomain().equals(getPackName());
     }
-    private static InputStream generateSoundsJSON () {
-        try {
-            ByteArrayOutputStream mediator = new ByteArrayOutputStream();
-            ObjectOutputStream stream = new ObjectOutputStream(mediator);
-
-            JsonObject root = new JsonObject();
-            for (Map.Entry<String, String> entry : sound_map.entrySet()) {
-                JsonObject event = new JsonObject();
-                event.addProperty("category", "record"); // put under the "record" category for sound options
-                JsonArray sounds = new JsonArray(); // array of sounds (will only ever be one)
-                JsonObject sound = new JsonObject(); // sound object (instead of primitive to use 'stream' flag)
-                sound.addProperty("name", entry.getValue()); // path to file
-                sound.addProperty("stream", true); // prevents lag for large files
-                sounds.add(sound);
-                event.add("sounds", sounds);
-                root.add("extrarecords." + entry.getKey(), event); // event name (same as name sent to ItemCustomRecord)
-            }
-
-            stream.writeUTF(root.toString());
-            stream.flush();
-            stream.close();
-
-            return new ByteArrayInputStream(mediator.toByteArray());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private File getRealPathBecauseMojangLiterallyCantEvenCodeOutsideTheirUsageScenario (ResourceLocation l) {
+        String altPath = l.getResourcePath();
+        altPath = altPath.substring(7); //omit the leading "sounds/"
+        System.out.println("Final path: .minecraft/"+altPath);
+        return new File(mc_dir,altPath);
+    }
+    private static InputStream generateSoundsJSON () throws IOException {
+        JsonObject root = new JsonObject();
+        for (Map.Entry<String, String> entry : sound_map.entrySet()) {
+            JsonObject event = new JsonObject();
+            event.addProperty("category", "record"); // put under the "record" category for sound options
+            JsonArray sounds = new JsonArray(); // array of sounds (will only ever be one)
+            JsonObject sound = new JsonObject(); // sound object (instead of primitive to use 'stream' flag)
+            sound.addProperty("name", entry.getValue()); // path to file
+            sound.addProperty("stream", true); // prevents lag for large files
+            sounds.add(sound);
+            event.add("sounds", sounds);
+            root.add("extrarecords." + entry.getKey(), event); // event name (same as name sent to ItemCustomRecord)
         }
+
+        return new ByteArrayInputStream(new Gson().toJson(root).getBytes());
     }
 
     public void addSoundReferenceMapping (int recordNum, String pathToSound) {

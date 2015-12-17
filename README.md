@@ -5,7 +5,7 @@ Adds the ability to add extra records via json config files
 ```json
 {
   "name": "Example Record",
-  "sound": "records/example_record.ogg",
+  "sound": "records/example_record",
   "color": {
     "red": 255,
     "green": 255,

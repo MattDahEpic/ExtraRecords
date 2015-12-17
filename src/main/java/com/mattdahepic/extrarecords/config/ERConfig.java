@@ -5,12 +5,10 @@ import com.google.gson.GsonBuilder;
 import com.mattdahepic.extrarecords.config.data.ConfigRecordData;
 import com.mattdahepic.extrarecords.config.data.ConfigRecordData.RGBWrapper;
 import com.mattdahepic.extrarecords.config.data.InternalRecordData;
+
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +29,7 @@ public class ERConfig {
             configDir.mkdirs();
             FileWriter out = new FileWriter(new File(configDir,"example_record.json"));
             //BEGIN DEFAULT RECORD
-            ConfigRecordData defaultRecord = new ConfigRecordData("Example Record","records/example_record.ogg",new RGBWrapper(255,255,255));
+            ConfigRecordData defaultRecord = new ConfigRecordData("Example Record","records/example_record",new RGBWrapper(255,255,255));
             //END DEFAULT RECORD
             out.write(gson.toJson(defaultRecord));
             out.close();
