@@ -22,7 +22,6 @@ public class RecordResource implements IResourcePack {
     private static File mc_dir = Minecraft.getMinecraft().mcDataDir;
 
     public InputStream getInputStream(ResourceLocation l) throws IOException {
-        System.out.println("Getting stream for resource "+l);
         if (l.getResourcePath().equals("sounds.json")) return generateSoundsJSON();
         return new FileInputStream(getRealPathBecauseMojangLiterallyCantEvenCodeOutsideTheirUsageScenario(l));
     }
@@ -50,8 +49,8 @@ public class RecordResource implements IResourcePack {
     private File getRealPathBecauseMojangLiterallyCantEvenCodeOutsideTheirUsageScenario (ResourceLocation l) {
         String altPath = l.getResourcePath();
         altPath = altPath.substring(7); //omit the leading "sounds/"
-        System.out.println("Final path: .minecraft/"+altPath);
-        return new File(mc_dir,altPath);
+        System.out.println("Final path: "+new File(mc_dir.getAbsolutePath(),altPath).getAbsolutePath());
+        return new File(mc_dir.getAbsolutePath(),altPath);
     }
     private static InputStream generateSoundsJSON () throws IOException {
         JsonObject root = new JsonObject();
@@ -66,7 +65,6 @@ public class RecordResource implements IResourcePack {
             event.add("sounds", sounds);
             root.add("extrarecords." + entry.getKey(), event); // event name (same as name sent to ItemCustomRecord)
         }
-
         return new ByteArrayInputStream(new Gson().toJson(root).getBytes());
     }
 
